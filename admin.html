@@ -67,7 +67,7 @@ textarea{min-height:76px;resize:vertical}
 </style>
 </head>
 <body>
-<div class="demo">نسخة تجريبية: التعديلات هنا تُحفظ في متصفحك فقط، والإيميل هنا شكل تجريبي (مفيش رسالة حقيقية بتتبعت). في النسخة الحقيقية تُحفظ في قاعدة بيانات ويظهر التغيير للجميع.</div>
+<div class="demo">نسخة تجريبية: التعديلات هنا تُحفظ في متصفحك فقط، وتسجيل الدخول مقفول في العرض ده. في النسخة الحقيقية تُحفظ في قاعدة بيانات ويظهر التغيير للجميع.</div>
 
 <div id="login" class="login">
   <img src="assets/img/logo.png" alt="">
@@ -125,7 +125,10 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){toast('تعذّر الحفظ: مساحة المتصفح ممتلئة',1)}}
 function toast(m,bad){const t=$('#toast');t.textContent=m;t.className='toast on'+(bad?' bad':'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='toast',2600)}
 function show(){$('#login').hidden=true;$('#app').hidden=false;data=window.phLoadProducts();draw()}
-if(sessionStorage.getItem('ph_admin')==='1')show();
+/* DEMO_OPEN: login (email + one-time code) is built below but switched off for the client preview.
+   Set to false to turn it back on. */
+const DEMO_OPEN=true;
+if(DEMO_OPEN){$('#out').hidden=true;show()}else if(sessionStorage.getItem('ph_admin')==='1')show();
 /* DEMO login: email + one-time code.
    Production: a Cloudflare Worker generates the code, stores only a hash with a 3-min expiry,
    emails it to an allow-listed address, and issues an HttpOnly session cookie after verification. */
