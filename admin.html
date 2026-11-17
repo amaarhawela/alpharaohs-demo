@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>لوحة التحكم — الفرعنة (نسخة تجريبية)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f1537;--blue:#2c348a;--gold:#e8b730;--cream:#fbf6ea;--ink:#171a33;--muted:#6b6f8a;--line:rgba(15,21,55,.14);--red:#c8312b;--green:#1f9d55}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Cairo',sans-serif;background:#f3efe2;color:var(--ink);min-height:100vh}
+a{color:inherit}button,input,textarea,select{font-family:inherit;font-size:1rem}
+.top{background:var(--navy);color:#fff;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.top img{height:42px}.top .r{display:flex;gap:10px;align-items:center}
+.demo{background:var(--gold);color:var(--navy);text-align:center;padding:8px 14px;font-weight:700;font-size:.9rem}
+.btn{border:0;border-radius:12px;padding:11px 20px;font-weight:700;cursor:pointer;transition:.2s;background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn:hover{transform:translateY(-2px)}.btn.p{background:var(--navy);color:#fff;border-color:var(--navy)}.btn.g{background:var(--gold);color:var(--navy);border-color:var(--gold)}.btn.d{color:var(--red);border-color:rgba(200,49,43,.4)}
+.wrap{max-width:1050px;margin:26px auto;padding:0 18px}
+.login{max-width:400px;margin:90px auto;background:#fff;border-radius:22px;padding:34px;box-shadow:0 30px 60px -30px rgba(15,21,55,.5);text-align:center}
+.login img{height:70px;margin:0 auto 14px;display:block}.login input{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;margin:14px 0;text-align:center;letter-spacing:.3em}
+.hint{color:var(--muted);font-size:.85rem}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.list{display:grid;gap:12px}
+.item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;gap:14px;align-items:center}
+.item img{width:70px;height:70px;border-radius:12px;object-fit:cover;flex:none;background:#eee}
+.item .m{flex:1;min-width:0}.item b{display:block}.item small{color:var(--muted)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:700;margin-inline-end:6px;background:#eceaf6;color:var(--blue)}
+.pill.off{background:#f6e1df;color:var(--red)}.pill.on{background:#dff3e7;color:var(--green)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+dialog{border:0;border-radius:22px;padding:0;max-width:680px;width:calc(100% - 28px);box-shadow:0 40px 80px -20px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(8,12,38,.65);backdrop-filter:blur(4px)}
+.fm{padding:26px;display:grid;gap:14px;max-height:88vh;overflow:auto}
+.fm h2{font-size:1.4rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:grid;gap:5px;font-weight:700;font-size:.9rem}label span.o{color:var(--muted);font-weight:400}
+input[type=text],input[type=number],textarea,select{padding:11px 13px;border:1px solid var(--line);border-radius:11px;width:100%;background:#fff}
+textarea{min-height:76px;resize:vertical}
+.chk{display:flex;gap:10px;align-items:center;font-weight:600}.chk input{width:20px;height:20px;accent-color:var(--blue)}
+.up{border:2px dashed var(--line);border-radius:14px;padding:16px;text-align:center;cursor:pointer;position:relative}
+.up img{max-height:170px;margin:0 auto 8px;border-radius:10px}
+.up input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.err{color:var(--red);font-size:.88rem;min-height:1.2em}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:13px 26px;border-radius:99px;opacity:0;transition:.35s;z-index:99;font-weight:700}
+.toast.on{opacity:1;transform:translateX(-50%)}.toast.bad{background:var(--red)}
+@media(max-width:600px){.two{grid-template-columns:1fr}.item{flex-wrap:wrap}.acts{width:100%}}
+[hidden]{display:none!important}
+.em{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;margin:14px 0 4px;text-align:left;font-size:1rem;letter-spacing:0!important}
+.otp{display:flex;gap:8px;justify-content:center;margin:18px 0 6px}
+.otp input{width:46px;height:56px;border:1.5px solid var(--line);border-radius:12px;text-align:center;font-size:1.5rem;font-weight:700;margin:0!important;padding:0!important;letter-spacing:0!important;transition:.2s}
+.otp input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px rgba(44,52,138,.18)}
+.otp.bad input{border-color:var(--red);animation:shk .4s}
+@keyframes shk{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.row2{display:flex;justify-content:space-between;margin-top:12px}
+.lnk{background:none;border:0;color:var(--blue);font-weight:700;cursor:pointer}.lnk:disabled{color:var(--muted);cursor:default;font-weight:400}
+.demobox{margin-top:16px;padding:12px;border-radius:12px;background:#fff8dd;border:1px dashed var(--gold)}.demobox small{display:block;color:var(--muted)}.demobox b{font-size:1.5rem;letter-spacing:.3em;color:var(--navy)}
+@media(max-width:420px){.otp input{width:40px;height:50px}}
+.life{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:8px 14px;border-radius:10px;background:#eef0fb;font-size:.9rem}.life b{font-size:1.1rem;color:var(--blue)}.life.low b{color:var(--red)}
+.inbox{margin-top:16px;border:1px solid var(--line);border-radius:14px;overflow:hidden;text-align:right;background:#fff}
+.ibh{display:flex;justify-content:space-between;gap:8px;padding:10px 14px;background:#f1f3f4;font-weight:700;font-size:.85rem;align-items:center}.ibh small{color:var(--muted);font-weight:400}
+.mail{opacity:0;transform:translateY(-10px);transition:.5s}.mail.in{opacity:1;transform:none}
+.mrow{display:flex;gap:10px;align-items:center;padding:12px 14px;background:#e8f0fe;border-bottom:1px solid var(--line)}
+.av{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font:700 .8rem Cairo;font-style:normal;flex:none}
+.mt{flex:1;min-width:0;display:grid;line-height:1.4}.mt b{font-size:.9rem}.mt span{font-size:.82rem;color:var(--muted)}.mt u{text-decoration:none;font-weight:700;color:var(--ink)}
+.mrow small{color:var(--muted);font-size:.75rem}
+.mbody{padding:14px 16px;font-size:.88rem;line-height:1.8}.mbody p{margin:4px 0}
+.big{font-size:1.9rem;font-weight:900;letter-spacing:.35em;color:var(--navy);background:#f6f3e6;border-radius:10px;padding:8px;text-align:center;margin:10px 0}
+.note{display:block;padding:8px 14px 12px;color:var(--muted)}
+.dm{margin-top:14px}
+</style>
+</head>
+<body>
+<div class="demo">نسخة تجريبية: التعديلات هنا تُحفظ في متصفحك فقط، والإيميل هنا شكل تجريبي (مفيش رسالة حقيقية بتتبعت). في النسخة الحقيقية تُحفظ في قاعدة بيانات ويظهر التغيير للجميع.</div>
+
+<div id="login" class="login">
+  <img src="assets/img/logo.png" alt="">
+  <h2>لوحة التحكم</h2>
+  <form id="f1" autocomplete="off">
+    <p class="hint">اكتب بريدك الإلكتروني المصرّح له، وهيوصلك رمز تحقق.</p>
+    <input id="em" type="email" inputmode="email" placeholder="name@company.com" required dir="ltr" class="em">
+    <div class="err" id="e1"></div>
+    <button class="btn p" id="send" style="width:100%">إرسال رمز التحقق</button>
+    <p class="hint dm">للعرض التجريبي: <b dir="ltr">fara3na.co@gmail.com</b></p>
+  </form>
+  <form id="f2" hidden autocomplete="off">
+    <p class="hint">بعتنا رمز من 6 أرقام على<br><b dir="ltr" id="sentTo"></b></p>
+    <div class="otp" id="otp" dir="ltr"><input maxlength="1" inputmode="numeric" aria-label="1"><input maxlength="1" inputmode="numeric" aria-label="2"><input maxlength="1" inputmode="numeric" aria-label="3"><input maxlength="1" inputmode="numeric" aria-label="4"><input maxlength="1" inputmode="numeric" aria-label="5"><input maxlength="1" inputmode="numeric" aria-label="6"></div>
+    <div class="err" id="e2"></div>
+    <button class="btn p" id="ver" style="width:100%">تأكيد ودخول</button>
+    <div class="row2"><button type="button" class="lnk" id="back">تغيير البريد</button><button type="button" class="lnk" id="resend" disabled>إعادة الإرسال (<span id="cd">30</span>)</button></div>
+    <div class="life" id="life"><span>صلاحية الرمز</span><b id="left" dir="ltr">3:00</b></div>
+    <div class="inbox" id="inbox"><div class="ibh"><span>📥 صندوق الوارد</span><small dir="ltr" id="ibto"></small></div>
+      <div class="mail" id="mail"><div class="mrow"><i class="av">PH</i><div class="mt"><b>Al Pharaohs · لوحة التحكم</b><span>رمز الدخول: <u id="subj" dir="ltr"></u></span></div><small>الآن</small></div>
+      <div class="mbody"><p>أهلاً،</p><p>رمز الدخول إلى لوحة التحكم هو:</p><div class="big" id="democode" dir="ltr"></div><p>الرمز صالح لمدة <b>3 دقائق</b> فقط ويُستخدم مرة واحدة.<br>لو مش إنت اللي طلبته، تجاهل الرسالة.</p></div></div>
+      <small class="note">نسخة تجريبية: ده شكل الرسالة اللي هتوصل على الإيميل الحقيقي.</small></div>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <div class="top"><img src="assets/img/logo.png" alt=""><div class="r"><a class="btn" href="index.html" target="_blank">عرض الموقع</a><button class="btn" id="out">تسجيل الخروج</button></div></div>
+  <div class="wrap">
+    <div class="bar"><h1>المنتجات <span class="hint" id="cnt"></span></h1><div class="acts"><button class="btn d" id="reset">استرجاع الأصل</button><button class="btn g" id="add">+ إضافة منتج</button></div></div>
+    <div class="list" id="list"></div>
+  </div>
+</div>
+
+<dialog id="dlg"><form class="fm" id="fm" method="dialog">
+  <h2 id="ft">إضافة منتج</h2>
+  <div class="two"><label>الاسم بالعربي<input type="text" id="nar" maxlength="80" required></label><label>Name in English<input type="text" id="nen" maxlength="80" required dir="ltr"></label></div>
+  <div class="two"><label>الوصف بالعربي <span class="o">(اختياري)</span><textarea id="dar" maxlength="400"></textarea></label><label>Description in English <span class="o">(optional)</span><textarea id="den" maxlength="400" dir="ltr"></textarea></label></div>
+  <label>صورة المنتج<div class="up" id="up"><img id="pv" alt="" hidden><span id="uh">اضغط لاختيار صورة (JPG / PNG / WEBP، حتى 5MB)</span><input type="file" id="file" accept="image/jpeg,image/png,image/webp"></div></label>
+  <label>التصنيف<select id="ct"></select></label>
+  <div class="two"><label>السعر <span class="o">(اختياري)</span><input type="number" id="pr" min="0" step="any"></label><label>العملة<select id="cu"><option>USD</option><option>EGP</option><option>EUR</option></select></label></div>
+  <label class="chk"><input type="checkbox" id="sp"> إظهار السعر في الموقع</label>
+  <label class="chk"><input type="checkbox" id="ac" checked> المنتج ظاهر في الموقع</label>
+  <div class="err" id="err"></div>
+  <div class="acts" style="justify-content:flex-end"><button type="button" class="btn" id="cancel">إلغاء</button><button type="submit" class="btn p">حفظ</button></div>
+</form></dialog>
+
+<dialog id="cf"><div class="fm"><h2>حذف المنتج؟</h2><p id="cft"></p><p class="hint">لا يمكن التراجع عن الحذف. لو عايز تخفيه مؤقتًا، ألغِ تفعيل "ظاهر في الموقع" بدل الحذف.</p>
+<div class="acts" style="justify-content:flex-end"><button class="btn" id="cn">إلغاء</button><button class="btn d" id="cy">نعم، احذف</button></div></div></dialog>
+<div class="toast" id="toast"></div>
+
+<script src="products-data.js"></script>
+<script>
+const $=s=>document.querySelector(s),KEY=window.PH_STORE_KEY;let data=[],editing=null,img=null,delId=null;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){toast('تعذّر الحفظ: مساحة المتصفح ممتلئة',1)}}
+function toast(m,bad){const t=$('#toast');t.textContent=m;t.className='toast on'+(bad?' bad':'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='toast',2600)}
+function show(){$('#login').hidden=true;$('#app').hidden=false;data=window.phLoadProducts();draw()}
+if(sessionStorage.getItem('ph_admin')==='1')show();
+/* DEMO login: email + one-time code.
+   Production: a Cloudflare Worker generates the code, stores only a hash with a 3-min expiry,
+   emails it to an allow-listed address, and issues an HttpOnly session cookie after verification. */
+const ALLOWED=['fara3na.co@gmail.com'];let code=null,exp=0,tries=0,cdT=null,mail='';
+const boxes=[...document.querySelectorAll('#otp input')];
+function gen(){const a=new Uint32Array(1);crypto.getRandomValues(a);return String(a[0]%1000000).padStart(6,'0')}
+function cd(){let n=30;$('#resend').disabled=true;$('#cd').textContent=n;clearInterval(cdT);cdT=setInterval(()=>{n--;$('#cd').textContent=n;if(n<=0){clearInterval(cdT);$('#resend').disabled=false;$('#resend').textContent='إعادة الإرسال'}},1000);$('#resend').innerHTML='إعادة الإرسال (<span id="cd">30</span>)'}
+let lifeT=null;function life(){clearInterval(lifeT);const tick=()=>{const l=Math.max(0,exp-Date.now()),m=Math.floor(l/60000),sc=String(Math.floor(l%60000/1000)).padStart(2,'0');$('#left').textContent=m+':'+sc;$('#life').classList.toggle('low',l<30000);if(l<=0){clearInterval(lifeT);if(code){code=null;$('#e2').textContent='انتهت صلاحية الرمز (3 دقائق). اطلب رمز جديد.';$('#democode').textContent='— — — — — —'}}};tick();lifeT=setInterval(tick,500)}
+function issue(){code=gen();$('#mail').classList.remove('in');setTimeout(()=>$('#mail').classList.add('in'),1100);$('#subj').textContent=code;$('#ibto').textContent=mail;exp=Date.now()+3*60*1000;tries=0;$('#democode').textContent=code;life();boxes.forEach(b=>b.value='');$('#e2').textContent='';boxes[0].focus();cd()}
+$('#f1').onsubmit=e=>{e.preventDefault();mail=$('#em').value.trim().toLowerCase();
+ if(!ALLOWED.includes(mail)){$('#e1').textContent='لو البريد ده مصرّح له، هيوصله رمز التحقق. (في العرض التجريبي استخدم البريد المكتوب تحت)';return}
+ $('#e1').textContent='';$('#sentTo').textContent=mail;$('#f1').hidden=true;$('#f2').hidden=false;issue()};
+boxes.forEach((b,k)=>{b.addEventListener('input',()=>{b.value=b.value.replace(/\D/g,'');if(b.value&&boxes[k+1])boxes[k+1].focus();if(boxes.every(x=>x.value))$('#f2').requestSubmit()});
+ b.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!b.value&&boxes[k-1])boxes[k-1].focus()});
+ b.addEventListener('paste',e=>{const t=(e.clipboardData.getData('text')||'').replace(/\D/g,'').slice(0,6);if(!t)return;e.preventDefault();[...t].forEach((c,x)=>boxes[x].value=c);boxes[Math.min(t.length,5)].focus();if(t.length===6)$('#f2').requestSubmit()})});
+$('#f2').onsubmit=e=>{e.preventDefault();const v=boxes.map(b=>b.value).join('');
+ if(Date.now()>exp){$('#e2').textContent='انتهت صلاحية الرمز (3 دقائق). اطلب رمز جديد.';return}
+ if(v.length<6){$('#e2').textContent='اكتب الرمز كامل (6 أرقام).';return}
+ if(v===code){code=null;sessionStorage.setItem('ph_admin','1');show();return}
+ tries++;const o=$('#otp');o.classList.remove('bad');void o.offsetWidth;o.classList.add('bad');
+ if(tries>=3){code=null;$('#e2').textContent='محاولات كتير غلط. ارجع واطلب رمز جديد.';$('#democode').textContent='— — — — — —';$('#subj').textContent='—'}else $('#e2').textContent='الرمز غير صحيح. باقي '+(3-tries)+' محاولات.'};
+$('#resend').onclick=issue;
+$('#back').onclick=()=>{code=null;$('#f2').hidden=true;$('#f1').hidden=false;$('#em').focus()};
+$('#out').onclick=()=>{sessionStorage.removeItem('ph_admin');location.reload()};
+function draw(){$('#cnt').textContent='('+data.length+')';$('#list').innerHTML=data.map(p=>`<div class="item"><img src="${esc(p.img)}" alt=""><div class="m"><b>${esc(p.ar.name)}</b><small dir="ltr">${esc(p.en.name)}</small><div style="margin-top:4px"><span class="pill ${p.active!==false?'on':'off'}">${p.active!==false?'ظاهر':'مخفي'}</span>${p.price!=null&&p.price!==''?`<span class="pill">${p.showPrice?'السعر ظاهر':'السعر مخفي'}: ${esc(p.price)} ${esc(p.currency)}</span>`:''}</div></div><div class="acts"><button class="btn" data-e="${esc(p.id)}">تعديل</button><button class="btn d" data-d="${esc(p.id)}">حذف</button></div></div>`).join('')||'<p class="hint">لا توجد منتجات. اضغط "إضافة منتج".</p>'}
+$('#list').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.e)openForm(b.dataset.e);if(b.dataset.d){delId=b.dataset.d;const p=data.find(x=>x.id===delId);$('#cft').textContent='سيتم حذف: '+p.ar.name;$('#cf').showModal()}};
+$('#cn').onclick=()=>$('#cf').close();
+$('#cy').onclick=()=>{data=data.filter(x=>x.id!==delId);save();draw();$('#cf').close();toast('تم حذف المنتج')};
+function openForm(id){editing=id?data.find(x=>x.id===id):null;const p=editing||{ar:{},en:{},currency:'USD',active:true,showPrice:false};
+ $('#ft').textContent=editing?'تعديل منتج':'إضافة منتج';$('#nar').value=p.ar.name||'';$('#nen').value=p.en.name||'';$('#dar').value=p.ar.desc||'';$('#den').value=p.en.desc||'';
+ $('#ct').innerHTML=Object.entries(window.PH_CATS).map(([k,v])=>`<option value="${k}">${v.ar}</option>`).join('');$('#ct').value=p.cat||'other';
+ $('#pr').value=p.price==null?'':p.price;$('#cu').value=p.currency||'USD';$('#sp').checked=!!p.showPrice;$('#ac').checked=p.active!==false;$('#err').textContent='';$('#file').value='';
+ img=p.img||null;$('#pv').hidden=!img;if(img)$('#pv').src=img;$('#uh').textContent=img?'اضغط لتغيير الصورة':'اضغط لاختيار صورة (JPG / PNG / WEBP، حتى 5MB)';$('#dlg').showModal()}
+$('#add').onclick=()=>openForm();$('#cancel').onclick=()=>$('#dlg').close();$('#reset').onclick=()=>{if(confirm('استرجاع قائمة المنتجات الأصلية؟ سيتم فقد التعديلات التجريبية.')){localStorage.removeItem(KEY);data=window.phLoadProducts();draw();toast('تم الاسترجاع')}};
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const er=$('#err');er.textContent='';
+ if(!['image/jpeg','image/png','image/webp'].includes(f.type)){er.textContent='نوع الملف غير مدعوم. استخدم JPG أو PNG أو WEBP.';e.target.value='';return}
+ if(f.size>5*1024*1024){er.textContent='حجم الصورة أكبر من 5MB.';e.target.value='';return}
+ const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);img=c.toDataURL('image/webp',.82);$('#pv').src=img;$('#pv').hidden=false;$('#uh').textContent='اضغط لتغيير الصورة'};im.onerror=()=>{er.textContent='تعذّرت قراءة الصورة.'};im.src=r.result};r.readAsDataURL(f)};
+$('#fm').onsubmit=e=>{e.preventDefault();const er=$('#err');
+ if(!$('#nar').value.trim()||!$('#nen').value.trim()){er.textContent='الاسم بالعربي والإنجليزي مطلوبان.';return}
+ if(!img){er.textContent='من فضلك اختر صورة للمنتج.';return}
+ const pr=$('#pr').value===''?null:Number($('#pr').value);if(pr!==null&&(!isFinite(pr)||pr<0)){er.textContent='السعر غير صحيح.';return}
+ if($('#sp').checked&&pr===null){er.textContent='اكتب السعر أولًا لو عايز تظهره.';return}
+ const o={id:editing?editing.id:'p'+Date.now(),img,cat:$('#ct').value,active:$('#ac').checked,showPrice:$('#sp').checked,price:pr,currency:$('#cu').value,ar:{name:$('#nar').value.trim(),desc:$('#dar').value.trim()},en:{name:$('#nen').value.trim(),desc:$('#den').value.trim()}};
+ if(editing)data[data.indexOf(editing)]=o;else data.unshift(o);save();draw();$('#dlg').close();toast(editing?'تم حفظ التعديلات':'تمت إضافة المنتج')};
+</script>
+</body>
+</html>
