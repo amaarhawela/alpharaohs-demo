@@ -140,9 +140,11 @@ html[dir=rtl] .card:hover .more i{transform:translateX(-6px)}
 .x{position:absolute;inset-inline-end:16px;top:14px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(15,21,55,.85);color:#fff;font-size:1.3rem;cursor:pointer;z-index:2}
 /* gallery */
 .gallery{background:#f1ead6;overflow:hidden}
-.strip{display:flex;gap:18px;margin-top:40px;animation:mq 60s linear infinite;width:max-content}
-html[dir=rtl] .strip{animation-direction:reverse}
-.strip:hover{animation-play-state:paused}
+.sw{direction:ltr;overflow:hidden;margin-top:40px}
+.strip{display:flex;margin-top:0;width:max-content;direction:ltr;animation:gl 70s linear infinite;will-change:transform}
+.grp{display:flex;gap:18px;padding-inline-end:18px;flex:none}
+@keyframes gl{to{transform:translate3d(-50%,0,0)}}
+@media(hover:hover){.strip:hover{animation-play-state:paused}}
 .strip img{height:360px;width:270px;object-fit:cover;flex:none;border-radius:20px;box-shadow:0 20px 40px -22px rgba(15,21,55,.6)}
 @media(max-width:900px){.strip img{height:280px;width:210px}}
 /* contact */
@@ -385,7 +387,7 @@ html[dir=rtl] .spot .bars i b{transform-origin:right}
 </div></section>
 
 <section class="gallery" id="gallery"><div class="wrap rv"><span class="eyebrow" data-i18n="g_eyebrow"></span><h2 class="h2" data-i18n="g_title"></h2></div>
-  <div class="strip" id="strip"></div>
+  <div class="sw"><div class="strip" id="strip"></div></div>
 </section>
 
 <section class="quote" id="quote"><div class="wrap grid">
@@ -483,7 +485,7 @@ $('#r_wa').href=C.whatsapp;$('#wa').href=C.whatsapp;$('#r_ph').href='tel:'+C.pho
 $('#map').src='https://maps.google.com/maps?q='+encodeURIComponent(C.mapQuery)+'&t=m&z=16&ie=UTF8&iwloc=&output=embed';
 $('#dir').href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(C.mapQuery);
 // gallery strip
-const gs=['g5','g6','g7','g8','g4','g3','g2'].map(g=>`<img src="assets/img/${g}.webp" alt="" loading="lazy">`).join('');$('#strip').innerHTML=gs+gs;
+const gs=['g5','g6','g7','g8','g4','g3','g2'].map(g=>`<img src="assets/img/${g}.webp" alt="" decoding="async">`).join('');$('#strip').innerHTML=`<div class="grp">${gs}</div>`.repeat(4);
 // falling seeds
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches){$('#seeds').innerHTML=Array.from({length:22},()=>`<i style="inset-inline-start:${Math.random()*100}%;animation-duration:${9+Math.random()*12}s;animation-delay:-${Math.random()*15}s;transform:scale(${.6+Math.random()*.9})"></i>`).join('')}
 // counters
